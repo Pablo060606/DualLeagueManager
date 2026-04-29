@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Solicitudes – Dual-League Manager{% endblock %}
+
+{% block content %}
+<h2>Solicitudes de club</h2>
+
+<h3>Solicitar unirse a un club</h3>
+<form method="POST" action="{{ url_for('transfers.requests') }}">
+    <div class="form-group">
+        <label for="club_id">Selecciona un club</label>
+        <select name="club_id" id="club_id" class="form-control" required>
+            <option value="">-- Selecciona un club --</option>
+            {% for club in clubs %}
+            <option value="{{ club.id }}">{{ club.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Solicitar unirse</button>
+</form>
+
+<h3>Mis solicitudes</h3>
+{% if my_requests %}
+<table class="table">
+    <thead>
+        <tr><th>Club</th><th>Estado</th><th>Fecha</th></tr>
+    </thead>
+    <tbody>
+        {% for req in my_requests %}
+        <tr>
+            <td>{{ req.to_club.name if req.to_club else 'N/A' }}</td>
+            <td>{{ req.status }}</td>
+            <td>{{ req.created_at.strftime('%d/%m/%Y') }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No tienes solicitudes enviadas.</p>
+{% endif %}
+{% endblock %}

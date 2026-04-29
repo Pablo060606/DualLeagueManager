@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}Mercado de Jugadores{% endblock %}
+
+{% block content %}
+<h2>Mercado de Jugadores</h2>
+
+<form method="GET" action="{{ url_for('market.players') }}" class="filter-form">
+    <div class="form-group inline">
+        <label>Posición:</label>
+        <select name="position" class="form-control">
+            <option value="">Todas</option>
+            {% for pos in positions %}
+                <option value="{{ pos }}" {% if selected_position == pos %}selected{% endif %}>{{ pos }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group inline">
+        <label>Liga:</label>
+        <select name="league" class="form-control">
+            <option value="">Todas</option>
+            {% for league in leagues %}
+                <option value="{{ league }}" {% if selected_league == league %}selected{% endif %}>{{ league }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-secondary">Filtrar</button>
+</form>
+
+{% if players %}
+<div class="player-grid">
+    {% for player in players %}
+    <div class="player-card">
+        <h5>{{ player.name }}</h5>
+        <p>Posición: <strong>{{ player.position }}</strong></p>
+        <p>Rating: <strong>{{ player.rating }}</strong></p>
+        <p>Valor: <strong>${{ "{:,.0f}".format(player.value) }}</strong></p>
+        <p>Liga: {{ player.league }}</p>
+        {% if current_user.is_authenticated and current_user.role == 'manager' %}
+        <form method="POST" action="{{ url_for('transfers.sign') }}">
+            <input type="hidden" name="player_id" value="{{ player.id }}">
+            <button type="submit" class="btn btn-primary btn-sm">Fichar</button>
+        </form>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>No hay jugadores disponibles con los filtros seleccionados.</p>
+{% endif %}
+{% endblock %}

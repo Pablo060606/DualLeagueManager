@@ -1,2 +1,70 @@
-# Created by pytest automatically.
-*
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env/
+ENV/
+# Windows venv scripts (committed by mistake)
+Activate.ps1
+activate
+activate.bat
+deactivate.bat
+pyvenv.cfg
+
+# Windows executables (venv scripts)
+*.exe
+
+# C headers (from packages)
+*.h
+
+# Database
+*.db
+*.sqlite3
+data/
+
+# dotenv
+.env
+
+# pytest / coverage
+.pytest_cache/
+CACHEDIR.TAG
+htmlcov/
+.coverage
+coverage.xml
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git internal files (committed by mistake)
+COMMIT_EDITMSG
+FETCH_HEAD
+HEAD
+index
+config
+
+# Old root-level source files (moved to src/ or tests/)
+/app.py
+/config.py
+/__init__.py
+/main.js
+/style.css
+/test_funcionalidades.py
+/respuestas_lab3.txt

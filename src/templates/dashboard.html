@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard – {{ club.name }}{% endblock %}
+
+{% block content %}
+<h2>Dashboard: {{ club.name }}</h2>
+<div class="stats-bar">
+    <span>Presupuesto total: ${{ "{:,.0f}".format(club.budget) }}</span>
+    <span>Presupuesto disponible: ${{ "{:,.0f}".format(club.available_budget) }}</span>
+    <span>Jugadores: {{ players|length }}</span>
+</div>
+
+<h3>Plantilla</h3>
+{% if players %}
+<table class="table">
+    <thead>
+        <tr><th>Nombre</th><th>Posición</th><th>Rating</th><th>Valor</th><th>Acciones</th></tr>
+    </thead>
+    <tbody>
+        {% for player in players %}
+        <tr>
+            <td>{{ player.name }}</td>
+            <td>{{ player.position }}</td>
+            <td>{{ player.rating }}</td>
+            <td>${{ "{:,.0f}".format(player.value) }}</td>
+            <td>
+                <form method="POST" action="{{ url_for('transfers.release', player_id=player.id) }}"
+                      onsubmit="return confirm('¿Liberar a {{ player.name }}?')">
+                    <button type="submit" class="btn btn-danger btn-sm">Liberar</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No tienes jugadores en la plantilla. <a href="{{ url_for('market.players') }}">Ir al mercado</a></p>
+{% endif %}
+
+<div class="actions">
+    <a href="{{ url_for('market.players') }}" class="btn btn-primary">Ir al Mercado</a>
+    <a href="{{ url_for('stats.club_stats') }}" class="btn btn-secondary">Ver Estadísticas</a>
+    <a href="{{ url_for('clubs.squad', club_id=club.id) }}" class="btn btn-secondary">Ver Plantilla</a>
+</div>
+{% endblock %}
