@@ -1,0 +1,53 @@
+RESPUESTAS - INGENIERIA DEL SOFTWARE LAB 3
+
+Ejercicio 1 - Pruebas funcionales (piramide de pruebas)
+1) Pruebas unitarias (caja blanca)
+- Archivo: tests/unit/test_models.py
+- Cobertura actual:
+  - Representacion de modelos User y Club.
+  - Valor por defecto de Player.status = "available".
+
+2) Pruebas de integracion (caja gris)
+- Archivo: tests/integration/test_transfers_flow.py
+- Cobertura actual:
+  - Flujo login + fichaje via API + persistencia de contrato y transaccion.
+  - Verificacion de que /market/api/players solo devuelve jugadores disponibles.
+
+3) Pruebas de validacion (caja negra)
+- Archivo: tests/validation/test_functional_requirements.py
+- Cobertura actual:
+  - Acceso al dashboard requiere autenticacion.
+  - Registro rechaza email duplicado.
+  - API de fichajes rechaza plantilla completa (maximo 18).
+  - API de fichajes valida player_id obligatorio.
+  - Crear club rechaza presupuesto no numerico.
+  - Jugador autenticado redirige a /market/players (no a crear club).
+  - Mercado para jugador en modo solo lectura (sin boton de fichar).
+  - Solicitud jugador->club y aceptacion por manager.
+
+Comprobacion de errores incluida:
+- Inputs invalidos (player_id, presupuesto, duplicados, permisos por rol).
+- Restricciones de negocio (plantilla maxima, disponibilidad de jugador).
+
+Ejercicio 2 - Pruebas no funcionales
+- Archivo: tests/non_functional/test_quality_attributes.py
+- Cobertura actual:
+  1) Seguridad:
+     - Bloqueo de open redirect en login (URL externa no permitida).
+  2) Rendimiento basico:
+     - Tiempo de respuesta del endpoint de mercado bajo carga de 300 jugadores (< 1s).
+
+Ejercicio 3 - Automatizacion
+- Todas las pruebas anteriores estan automatizadas con pytest.
+- Estructura automatizada:
+  - tests/unit
+  - tests/integration
+  - tests/validation
+  - tests/non_functional
+- Ejecucion:
+  python -m pytest -q
+
+Estado:
+- Plan de pruebas definido por niveles y tipologia (caja blanca/gris/negra).
+- Pruebas no funcionales implementadas.
+- Suite automatizada lista para ejecucion y demostracion.

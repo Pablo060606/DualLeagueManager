@@ -17,21 +17,21 @@ if __name__ == '__main__':
     print("\n" + "=" * 70)
     print("  🚀 INICIANDO DUAL-LEAGUE MANAGER")
     print("=" * 70)
-
+    
     try:
         # Crear la aplicación
         app = create_app(os.getenv('FLASK_ENV', 'development'))
-
+        
         print("  ✓ Aplicación creada exitosamente")
         print("\n  📍 Accede a: http://localhost:5000")
         print("  �� Usuario de prueba: manager1@example.com")
         print("  🔑 Contraseña: password123")
         print("  ⏹️  Para detener: Ctrl + C")
         print("=" * 70 + "\n")
-
+        
         # Ejecutar
         app.run(debug=True, host='127.0.0.1', port=5000)
-
+        
     except Exception as e:
         print(f"\n  ❌ Error al iniciar: {e}")
         print("\n  Intenta:")
