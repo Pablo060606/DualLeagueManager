@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}Estadísticas – {{ club.name }}{% endblock %}
+
+{% block content %}
+<h2>Estadísticas del club: {{ club.name }}</h2>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <h4>Jugadores</h4>
+        <p class="stat-value">{{ stats.total_players }}</p>
+    </div>
+    <div class="stat-card">
+        <h4>Valor Total</h4>
+        <p class="stat-value">${{ "{:,.0f}".format(stats.total_value) }}</p>
+    </div>
+    <div class="stat-card">
+        <h4>Rating Promedio</h4>
+        <p class="stat-value">{{ stats.avg_rating }}</p>
+    </div>
+    <div class="stat-card">
+        <h4>Presupuesto disponible</h4>
+        <p class="stat-value">${{ "{:,.0f}".format(stats.available_budget) }}</p>
+    </div>
+    <div class="stat-card">
+        <h4>Gastado</h4>
+        <p class="stat-value">${{ "{:,.0f}".format(stats.spent) }}</p>
+    </div>
+</div>
+
+<h3>Distribución por posición</h3>
+<ul>
+    {% for pos, count in stats.position_count.items() %}
+    <li>{{ pos }}: {{ count }} jugadores</li>
+    {% endfor %}
+</ul>
+
+<h3>Jugadores en plantilla</h3>
+{% if players %}
+<table class="table">
+    <thead>
+        <tr><th>Nombre</th><th>Posición</th><th>Rating</th><th>Valor</th></tr>
+    </thead>
+    <tbody>
+        {% for player in players %}
+        <tr>
+            <td>{{ player.name }}</td>
+            <td>{{ player.position }}</td>
+            <td>{{ player.rating }}</td>
+            <td>${{ "{:,.0f}".format(player.value) }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No hay jugadores en la plantilla.</p>
+{% endif %}
+
+<a href="{{ url_for('clubs.dashboard') }}" class="btn btn-secondary">Volver al Dashboard</a>
+{% endblock %}
