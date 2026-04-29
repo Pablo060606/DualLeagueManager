@@ -1,3 +1,4 @@
+"""Pruebas unitarias de la aplicación Dual-League Manager"""
 import pytest
 from werkzeug.security import generate_password_hash
 

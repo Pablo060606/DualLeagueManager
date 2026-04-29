@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}Dual-League Manager – Inicio{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1>⚽ Dual-League Manager</h1>
+    <p>Gestiona tu club de fútbol: ficha jugadores, administra presupuestos y domina la liga.</p>
+    {% if not current_user.is_authenticated %}
+        <a href="{{ url_for('auth.register') }}" class="btn btn-primary">Empezar gratis</a>
+        <a href="{{ url_for('auth.login') }}" class="btn btn-secondary">Iniciar sesión</a>
+    {% else %}
+        {% if current_user.role == 'manager' %}
+            <a href="{{ url_for('clubs.dashboard') }}" class="btn btn-primary">Ir a mi Dashboard</a>
+        {% else %}
+            <a href="{{ url_for('transfers.requests') }}" class="btn btn-primary">Ver Solicitudes</a>
+        {% endif %}
+    {% endif %}
+</div>
+
+<div class="landing-stats">
+    <div class="stat-card">
+        <h3>Clubes registrados</h3>
+        <p class="stat-value">{{ total_clubs }}</p>
+    </div>
+    <div class="stat-card">
+        <h3>Jugadores disponibles</h3>
+        <p class="stat-value">{{ total_players }}</p>
+    </div>
+</div>
+
+{% if clubs %}
+<h2>Clubes</h2>
+<div class="club-grid">
+    {% for club in clubs %}
+    <div class="club-card">
+        <h4>{{ club.name }}</h4>
+        <p>Manager: {{ club.manager.name }}</p>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

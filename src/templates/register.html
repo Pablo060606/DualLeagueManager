@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Registro – Dual-League Manager{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Crear cuenta</h2>
+    <form method="POST" action="{{ url_for('auth.register') }}">
+        <div class="form-group">
+            <label for="name">Nombre</label>
+            <input type="text" id="name" name="name" required class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="password">Contraseña</label>
+            <input type="password" id="password" name="password" required class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="role">Rol</label>
+            <select id="role" name="role" class="form-control">
+                <option value="manager">Manager</option>
+                <option value="player">Jugador</option>
+            </select>
+        </div>
+        <div class="form-group" id="position-group">
+            <label for="preferred_position">Posición preferida (solo jugadores)</label>
+            <select id="preferred_position" name="preferred_position" class="form-control">
+                <option value="">-- Selecciona --</option>
+                <option value="PG">Portero (PG)</option>
+                <option value="DEF">Defensa (DEF)</option>
+                <option value="MED">Centrocampista (MED)</option>
+                <option value="DEL">Delantero (DEL)</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Registrarse</button>
+    </form>
+    <p>¿Ya tienes cuenta? <a href="{{ url_for('auth.login') }}">Inicia sesión</a></p>
+</div>
+{% endblock %}
